@@ -29,16 +29,14 @@ public class TimeQuestion implements QuestionType {
         SentenceAnalysis analysis = SentenceAnalyzer.getSentenceAnalyzer().analyze("");
         SentenceAnalyzer.getSentenceAnalyzer().disambiguate(analysis);
 
-        for (SentenceAnalysis.Entry entry : analysis) {
-            WordAnalysis wa = entry.parses.get(0);
+        for (Word word : wordList) {
 
-            if(!keywords.contains(wa.dictionaryItem.secondaryPos.toString())) {
-                builder.append(entry.input + " ");
+            if(!keywords.contains(word.getSecondaryPos())) {
+                builder.append(word.getWord() + " ");
             } else {
-                answer.append(entry.input + " ");
+                answer.append(word.getWord() + " ");
             }
         }
-
 
         List<Question> questions = new ArrayList<Question>();
         questions.add(new Question(builder.toString() + " ?", answer.toString(), new TimeQuestion()));
