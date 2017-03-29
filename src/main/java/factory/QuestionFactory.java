@@ -66,28 +66,28 @@ public class QuestionFactory {
         return type.reorganize(wordList);
     }
 
-    private Word.Suffix getSuffix(String log) {
+    private Suffix getSuffix(String log) {
         if(log.contains("Acc")) {
             questionTypeSet.add(new AccQuestion());
-            return Word.Suffix.ACCUSATIVE;
+            return Suffix.ACCUSATIVE;
         }
         else if(log.contains("Dat")) {
             questionTypeSet.add(new DatQuestion());
-            return Word.Suffix.DATIVE;
+            return Suffix.DATIVE;
         }
         else if(log.contains("Loc")) {
             questionTypeSet.add(new LocQuestion());
-            return Word.Suffix.LOCATIVE;
+            return Suffix.LOCATIVE;
         }
         else if(log.contains("Abl")) {
             questionTypeSet.add(new AblQuestion());
-            return Word.Suffix.ABLATIVE;
+            return Suffix.ABLATIVE;
         } else if(log.contains("ProperNoun")) {
             questionTypeSet.add(new PlainQuestion());
-            return Word.Suffix.PLAIN;
+            return Suffix.PLAIN;
         }
         else{
-            return Word.Suffix.NONE;
+            return Suffix.NONE;
         }
     }
 }

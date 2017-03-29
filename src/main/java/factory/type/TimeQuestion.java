@@ -4,7 +4,6 @@ import morphology.SentenceAnalyzer;
 import word.Question;
 import word.Word;
 import zemberek.morphology.analysis.SentenceAnalysis;
-import zemberek.morphology.analysis.WordAnalysis;
 
 import java.util.ArrayList;
 import java.util.HashSet;
