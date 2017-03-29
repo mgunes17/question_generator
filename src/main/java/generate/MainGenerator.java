@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class MainGenerator {
     public static void main(String[] args) throws IOException {
-        String s1 = "Yarın sabah Ankara' ya gidiyorum.";
+        String s1 = "Dün sabah okuldan ayrıldım.";
         QuestionFactory factory = new QuestionFactory(s1, SentenceAnalyzer.getSentenceAnalyzer());
 
         List<Question> questions = factory.getQuestionList();

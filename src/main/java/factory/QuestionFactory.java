@@ -1,7 +1,6 @@
 package factory;
 
-import factory.type.QuestionType;
-import factory.type.TimeQuestion;
+import factory.type.*;
 import word.Question;
 import word.Word;
 import zemberek.morphology.analysis.SentenceAnalysis;
@@ -17,6 +16,8 @@ public class QuestionFactory {
     private final String sentence;
     private TurkishSentenceAnalyzer analyzer;
     List<Word> wordList = new ArrayList<Word>();
+    Set<QuestionType> questionTypeSet = new HashSet<QuestionType>();
+
 
     public QuestionFactory(String sentence, TurkishSentenceAnalyzer analyzer) {
         this.sentence = sentence;
@@ -26,7 +27,6 @@ public class QuestionFactory {
     public List<Question> getQuestionList() {
         List<Question> generatedList = new ArrayList<Question>();
         Set<String> secondaryPostTags = new HashSet<String>();
-        Set<QuestionType> qType = new HashSet<QuestionType>();
         Map<String, QuestionType> tagMap = new HashMap<String, QuestionType>();
         tagMap.put("Time", new TimeQuestion());
         tagMap.put("Clock", new TimeQuestion());
@@ -51,10 +51,10 @@ public class QuestionFactory {
 
         //secondary posların soru tipini set e at
         for(String tag: secondaryPostTags) {
-            qType.add(tagMap.get(tag));
+            questionTypeSet.add(tagMap.get(tag));
         }
 
-        for(QuestionType type: qType) {
+        for(QuestionType type: questionTypeSet) {
             if(type != null) {
                 generatedList.addAll(generate(type));
             }
@@ -68,14 +68,22 @@ public class QuestionFactory {
     }
 
     private Word.Suffix getSuffix(String log) {
-        if(log.contains("Acc"))
+        if(log.contains("Acc")) {
+            questionTypeSet.add(new AccQuestion());
             return Word.Suffix.ACCUSATIVE;
-        else if(log.contains("Dat"))
+        }
+        else if(log.contains("Dat")) {
+            questionTypeSet.add(new DatQuestion());
             return Word.Suffix.DATIVE;
-        else if(log.contains("Loc"))
+        }
+        else if(log.contains("Loc")) {
+            questionTypeSet.add(new LocQuestion());
             return Word.Suffix.LOCATIVE;
-        else if(log.contains("Abl"))
+        }
+        else if(log.contains("Abl")) {
+            questionTypeSet.add(new AblQuestion());
             return Word.Suffix.ABLATIVE;
+        }
         else
             return Word.Suffix.NONE;
     }
