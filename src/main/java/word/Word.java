@@ -1,13 +1,11 @@
 package word;
 
+import factory.type.Suffix;
+
 /**
  * Created by mustafa on 29.03.2017.
  */
 public class Word {
-    public enum Suffix {
-        PLAIN, DATIVE, ABLATIVE, ACCUSATIVE, LOCATIVE, NONE
-    }
-
     private final String word;
     private String primaryPos;
     private String secondaryPos;
