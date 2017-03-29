@@ -10,6 +10,8 @@ public class Word {
     private String primaryPos;
     private String secondaryPos;
     private Suffix suffix;
+    private boolean isCopQuestion = false;
+    private boolean isInstQuestion = false;
 
     public Word(String word, Suffix suffix) {
         this.word = word;
@@ -44,5 +46,21 @@ public class Word {
 
     public void setSuffix(Suffix suffix) {
         this.suffix = suffix;
+    }
+
+    public boolean isCopQuestion() {
+        return isCopQuestion;
+    }
+
+    public void setCopQuestion(boolean copQuestion) {
+        isCopQuestion = copQuestion;
+    }
+
+    public boolean isInstQuestion() {
+        return isInstQuestion;
+    }
+
+    public void setInstQuestion(boolean instQuestion) {
+        isInstQuestion = instQuestion;
     }
 }
