@@ -9,9 +9,8 @@ import java.util.List;
 /**
  * Created by ercan on 29.03.2017.
  */
-public class PlainQuestion implements QuestionType {
-    private final String KIM = "kim";
-    private final String NE = "ne";
+public class CopQuestion implements QuestionType {
+    private final String NEDIR = "nedir";
 
     public List<Question> reorganize(List<Word> wordList) {
 
@@ -19,16 +18,16 @@ public class PlainQuestion implements QuestionType {
         StringBuilder answer = new StringBuilder();
 
         for (Word word : wordList) {
-            if(word.getSuffix() != Suffix.PLAIN) {
+            if(!word.isCopQuestion()) {
                 sentence.append(word.getWord() + " ");
             } else {
-                sentence.append(KIM + " ");
+                sentence.append(NEDIR + " ");
                 answer.append(word.getWord() + " ");
             }
         }
 
         List<Question> questions = new ArrayList<Question>();
-        questions.add(new Question(sentence.toString() + " ?", answer.toString(), new PlainQuestion()));
+        questions.add(new Question(sentence.toString() + " ?", answer.toString(), new CopQuestion()));
 
         return questions;
     }

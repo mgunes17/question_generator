@@ -25,12 +25,11 @@ public class QuestionFactory {
 
     public List<Question> getQuestionList() {
         List<Question> generatedList = new ArrayList<Question>();
-        Set<String> secondaryPostTags = new HashSet<String>();
+        Set<String> secondaryPosTags = new HashSet<String>();
         Map<String, QuestionType> tagMap = new HashMap<String, QuestionType>();
         tagMap.put("Time", new TimeQuestion());
         tagMap.put("Clock", new TimeQuestion());
         tagMap.put("Date", new TimeQuestion());
-
 
         SentenceAnalysis analysis = analyzer.analyze(sentence);
         analyzer.disambiguate(analysis);
@@ -39,17 +38,25 @@ public class QuestionFactory {
         //secondary pos ları sete at
         for (SentenceAnalysis.Entry entry : analysis) {
             WordAnalysis wa = entry.parses.get(0);
-            secondaryPostTags.add(wa.dictionaryItem.secondaryPos.toString());
-
+            secondaryPosTags.add(wa.dictionaryItem.secondaryPos.toString());
 
             word = new Word(entry.input, getSuffix(wa.formatLong() + wa.dictionaryItem.secondaryPos));
             word.setPrimaryPos(wa.dictionaryItem.primaryPos.toString());
             word.setSecondaryPos(wa.dictionaryItem.secondaryPos.toString());
+            if(wa.dictionaryItem.primaryPos.toString().equals("Noun") && wa.formatLong().contains("Cop")){
+                questionTypeSet.add(new CopQuestion());
+                word.setCopQuestion(true);
+            }
+            if( wa.formatLong().contains("Inst")){
+                questionTypeSet.add(new InstQuestion());
+                word.setInstQuestion(true);
+            }
+
             wordList.add(word);
         }
 
         //secondary posların soru tipini set e at
-        for(String tag: secondaryPostTags) {
+        for(String tag: secondaryPosTags) {
             questionTypeSet.add(tagMap.get(tag));
         }
 
@@ -82,10 +89,10 @@ public class QuestionFactory {
         else if(log.contains("Abl")) {
             questionTypeSet.add(new AblQuestion());
             return Suffix.ABLATIVE;
-        } else if(log.contains("ProperNoun")) {
+        } /*else if(log.contains("ProperNoun")) {
             questionTypeSet.add(new PlainQuestion());
             return Suffix.PLAIN;
-        }
+        }*/
         else{
             return Suffix.NONE;
         }

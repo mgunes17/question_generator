@@ -24,10 +24,10 @@ public class SentenceAnalyzer {
         TurkishMorphology morphology = null;
         try {
             morphology = TurkishMorphology.createWithDefaults();
-            Z3MarkovModelDisambiguator disambiguator = new Z3MarkovModelDisambiguator();
+            Z3MarkovModelDisambiguator disambigutor = new Z3MarkovModelDisambiguator();
             sentenceAnalyzer = new TurkishSentenceAnalyzer(
                     morphology,
-                    disambiguator
+                    disambigutor
             );
         } catch (IOException e) {
             e.printStackTrace();
