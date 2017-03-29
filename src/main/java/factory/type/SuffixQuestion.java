@@ -7,28 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ercan on 29.03.2017.
+ * Created by mustafa on 29.03.2017.
  */
-public class PlainQuestion implements QuestionType {
-    private final String KIM = "kim";
-    private final String NE = "ne";
+public abstract class SuffixQuestion {
+    protected abstract String chooseQuestionWord();
 
-    public List<Question> reorganize(List<Word> wordList) {
-
+    public List<Question> reorganize(List<Word> wordList, Suffix suffix, String qw) {
         StringBuilder sentence = new StringBuilder();
         StringBuilder answer = new StringBuilder();
 
         for (Word word : wordList) {
-            if(word.getSuffix() != Suffix.PLAIN) {
+            if(word.getSuffix() != suffix) {
                 sentence.append(word.getWord() + " ");
             } else {
-                sentence.append(KIM + " ");
+                sentence.append(qw + " ");
                 answer.append(word.getWord() + " ");
             }
         }
 
         List<Question> questions = new ArrayList<Question>();
-        questions.add(new Question(sentence.toString() + " ?", answer.toString(), new AblQuestion()));
+        questions.add(new Question(sentence.toString() + " ?", answer.toString(), suffix.getQuestionType()));
 
         return questions;
     }
