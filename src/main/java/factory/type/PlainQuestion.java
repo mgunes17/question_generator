@@ -3,6 +3,7 @@ package factory.type;
 import word.Question;
 import word.Word;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,25 @@ import java.util.List;
  */
 public class PlainQuestion implements QuestionType {
     private final String KIM = "kim";
+    private final String NE = "ne";
 
     public List<Question> reorganize(List<Word> wordList) {
-        return null;
+
+        StringBuilder sentence = new StringBuilder();
+        StringBuilder answer = new StringBuilder();
+
+        for (Word word : wordList) {
+            if(word.getSuffix() != Word.Suffix.PLAIN) {
+                sentence.append(word.getWord() + " ");
+            } else {
+                sentence.append(KIM + " ");
+                answer.append(word.getWord() + " ");
+            }
+        }
+
+        List<Question> questions = new ArrayList<Question>();
+        questions.add(new Question(sentence.toString() + " ?", answer.toString(), new AblQuestion()));
+
+        return questions;
     }
 }
