@@ -120,13 +120,14 @@ public class MorphologyTest {
         }
 
         System.out.println("----------------------");
-        String s11 = "Kitabın sayfasında boşluklar vardı.";
+        String s11 = "Ben yarın Ankara'yı İstanbul'dan izleyeceğim.";
         analysis = sentenceAnalyzer.analyze(s11);
         sentenceAnalyzer.disambiguate(analysis);
 
         for (SentenceAnalysis.Entry entry : analysis) {
             WordAnalysis wa = entry.parses.get(0);
-            System.out.println(wa.formatLong());
+            System.out.println(wa.formatLong() + " " + wa.dictionaryItem.primaryPos.toString() + " " +
+            wa.dictionaryItem.secondaryPos);
         }
     }
 }

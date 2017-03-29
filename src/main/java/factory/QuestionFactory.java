@@ -18,7 +18,6 @@ public class QuestionFactory {
     List<Word> wordList = new ArrayList<Word>();
     Set<QuestionType> questionTypeSet = new HashSet<QuestionType>();
 
-
     public QuestionFactory(String sentence, TurkishSentenceAnalyzer analyzer) {
         this.sentence = sentence;
         this.analyzer = analyzer;
@@ -43,7 +42,7 @@ public class QuestionFactory {
             secondaryPostTags.add(wa.dictionaryItem.secondaryPos.toString());
 
 
-            word = new Word(entry.input, getSuffix(wa.formatLong()));
+            word = new Word(entry.input, getSuffix(wa.formatLong() + wa.dictionaryItem.secondaryPos));
             word.setPrimaryPos(wa.dictionaryItem.primaryPos.toString());
             word.setSecondaryPos(wa.dictionaryItem.secondaryPos.toString());
             wordList.add(word);
@@ -83,8 +82,12 @@ public class QuestionFactory {
         else if(log.contains("Abl")) {
             questionTypeSet.add(new AblQuestion());
             return Word.Suffix.ABLATIVE;
+        } else if(log.contains("ProperNoun")) {
+            questionTypeSet.add(new PlainQuestion());
+            return Word.Suffix.PLAIN;
         }
-        else
+        else{
             return Word.Suffix.NONE;
+        }
     }
 }

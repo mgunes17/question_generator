@@ -23,7 +23,7 @@ public class AblQuestion implements QuestionType {
             if(word.getSuffix() != Word.Suffix.ABLATIVE) {
                 sentence.append(word.getWord() + " ");
             } else {
-                sentence.append("nereden" + " ");
+                sentence.append(NEREDEN + " ");
                 answer.append(word.getWord() + " ");
             }
         }

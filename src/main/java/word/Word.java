@@ -5,7 +5,7 @@ package word;
  */
 public class Word {
     public enum Suffix {
-        NONE, DATIVE, ABLATIVE, ACCUSATIVE, LOCATIVE
+        PLAIN, DATIVE, ABLATIVE, ACCUSATIVE, LOCATIVE, NONE
     }
 
     private final String word;
