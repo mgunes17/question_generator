@@ -1,7 +1,10 @@
 package factory;
 
 import factory.type.*;
+import factory.type.suffix.*;
+import morphology.SentenceAnalyzer;
 import word.Question;
+import word.Sentence;
 import word.Word;
 import zemberek.morphology.analysis.SentenceAnalysis;
 import zemberek.morphology.analysis.WordAnalysis;
@@ -15,15 +18,24 @@ import java.util.*;
 public class QuestionFactory {
     private final String sentence;
     private TurkishSentenceAnalyzer analyzer;
-    List<Word> wordList = new ArrayList<Word>();
-    Set<QuestionType> questionTypeSet = new HashSet<QuestionType>();
+    private List<Word> wordList = new ArrayList<Word>();
+    private Set<QuestionType> questionTypeSet = new HashSet<QuestionType>();
+    private Map<String, QuestionType> singleTypes = new HashMap<String, QuestionType>();
 
-    public QuestionFactory(String sentence, TurkishSentenceAnalyzer analyzer) {
+    public QuestionFactory(String sentence) {
         this.sentence = sentence;
-        this.analyzer = analyzer;
+        analyzer = SentenceAnalyzer.getSentenceAnalyzer();
+        singleTypes.put("abl", new AblQuestion());
+        singleTypes.put("acc", new AccQuestion());
+        singleTypes.put("dat", new DatQuestion());
+        singleTypes.put("loc", new LocQuestion());
+        singleTypes.put("cop", new CopQuestion());
+        singleTypes.put("inst", new InstQuestion());
+        singleTypes.put("time", new TimeQuestion());
+        singleTypes.put("gen", new GenQuestion());
     }
 
-    public List<Question> getQuestionList() {
+    public Sentence getQuestionList() {
         List<Question> generatedList = new ArrayList<Question>();
         Set<String> secondaryPosTags = new HashSet<String>();
         Map<String, QuestionType> tagMap = new HashMap<String, QuestionType>();
@@ -40,15 +52,17 @@ public class QuestionFactory {
             WordAnalysis wa = entry.parses.get(0);
             secondaryPosTags.add(wa.dictionaryItem.secondaryPos.toString());
 
-            word = new Word(entry.input, getSuffix(wa.formatLong() + wa.dictionaryItem.secondaryPos));
+            word = new Word(entry.input);
+            word.setLog(wa.formatLong());
+            word.setSuffix(getSuffix(word));
             word.setPrimaryPos(wa.dictionaryItem.primaryPos.toString());
             word.setSecondaryPos(wa.dictionaryItem.secondaryPos.toString());
             if(wa.dictionaryItem.primaryPos.toString().equals("Noun") && wa.formatLong().contains("Cop")){
-                questionTypeSet.add(new CopQuestion());
+                questionTypeSet.add(singleTypes.get("cop"));
                 word.setCopQuestion(true);
             }
             if( wa.formatLong().contains("Inst")){
-                questionTypeSet.add(new InstQuestion());
+                questionTypeSet.add(singleTypes.get("inst"));
                 word.setInstQuestion(true);
             }
 
@@ -66,33 +80,38 @@ public class QuestionFactory {
             }
         }
 
-        return generatedList;
+        Sentence s = new Sentence(sentence);
+        s.setQuestionList(generatedList);
+        return s;
     }
 
     private List<Question> generate(QuestionType type) {
         return type.reorganize(wordList);
     }
 
-    private Suffix getSuffix(String log) {
+    private Suffix getSuffix(Word word) {
+        String log = word.getLog() + " " + word.getSecondaryPos();
+
         if(log.contains("Acc")) {
-            questionTypeSet.add(new AccQuestion());
+            questionTypeSet.add(singleTypes.get("acc"));
             return Suffix.ACCUSATIVE;
         }
         else if(log.contains("Dat")) {
-            questionTypeSet.add(new DatQuestion());
+            questionTypeSet.add(singleTypes.get("dat"));
             return Suffix.DATIVE;
         }
         else if(log.contains("Loc")) {
-            questionTypeSet.add(new LocQuestion());
+            questionTypeSet.add(singleTypes.get("loc"));
             return Suffix.LOCATIVE;
         }
         else if(log.contains("Abl")) {
-            questionTypeSet.add(new AblQuestion());
+            questionTypeSet.add(singleTypes.get("abl"));
             return Suffix.ABLATIVE;
-        } /*else if(log.contains("ProperNoun")) {
-            questionTypeSet.add(new PlainQuestion());
+        }else if(log.contains("Gen")) {
+            questionTypeSet.add(singleTypes.get("gen"));
+            word.setGen(true);
             return Suffix.PLAIN;
-        }*/
+        }
         else{
             return Suffix.NONE;
         }

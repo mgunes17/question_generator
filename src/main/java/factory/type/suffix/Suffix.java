@@ -1,4 +1,7 @@
-package factory.type;
+package factory.type.suffix;
+
+import factory.type.PlainQuestion;
+import factory.type.QuestionType;
 
 /**
  * Created by mustafa on 29.03.2017.

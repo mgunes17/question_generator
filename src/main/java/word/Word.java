@@ -1,6 +1,6 @@
 package word;
 
-import factory.type.Suffix;
+import factory.type.suffix.Suffix;
 
 /**
  * Created by mustafa on 29.03.2017.
@@ -9,13 +9,19 @@ public class Word {
     private final String word;
     private String primaryPos;
     private String secondaryPos;
+    private String log;
     private Suffix suffix;
     private boolean isCopQuestion = false;
     private boolean isInstQuestion = false;
+    private boolean isGen = false;
 
     public Word(String word, Suffix suffix) {
         this.word = word;
         this.suffix = suffix;
+    }
+
+    public Word(String word) {
+        this.word = word;
     }
 
     //getter-setter
@@ -63,4 +69,22 @@ public class Word {
     public void setInstQuestion(boolean instQuestion) {
         isInstQuestion = instQuestion;
     }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public boolean isGen() {
+        return isGen;
+    }
+
+    public void setGen(boolean gen) {
+        isGen = gen;
+    }
+
+
 }

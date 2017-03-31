@@ -11,6 +11,12 @@ import java.util.List;
  */
 public class CopQuestion implements QuestionType {
     private final String NEDIR = "nedir";
+    private final String NERESIDIR = "neresidir";
+    private final String KIMDIR = "kimdir";
+    private final String NESIDIR = "nesidir";
+    private final String NEREDEDIR = "nerededir";
+    private final String NEREDENDIR = "neredendir";
+    private final String NEDENDIR = "nedendir";
 
     public List<Question> reorganize(List<Word> wordList) {
 

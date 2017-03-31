@@ -1,5 +1,6 @@
 package factory.type;
 
+import factory.type.suffix.Suffix;
 import word.Question;
 import word.Word;
 
