@@ -20,10 +20,10 @@ public class MorphologyTest {
 
         List<String> sentences = new ArrayList<String>();
         sentences.add("O elmaların 6da 2sinin yarısını yedi .");
-        sentences.add("Elmaların 5i suya düştü .");
+        sentences.add("Öğrencilerin 5i suya düştü .");
         sentences.add("Elmaların 5ini suya düşürdü .");
         sentences.add("Elmaların 60ını suya düşürdü .");
-        sentences.add("Türkiye'nin başkenti Ankara'dır .");
+        sentences.add("Her yıl kurban bayramında koç keserim.");
 
 
         for(String sentence: sentences) {

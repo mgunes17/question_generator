@@ -22,7 +22,7 @@ public class TimeQuestion implements QuestionType {
         keywords.add("Clock");
         keywords.add("Date");
 
-        StringBuilder builder = new StringBuilder("Ne zaman ");
+        StringBuilder builder = new StringBuilder();
         StringBuilder answer = new StringBuilder();
 
         SentenceAnalysis analysis = SentenceAnalyzer.getSentenceAnalyzer().analyze("");
@@ -33,6 +33,7 @@ public class TimeQuestion implements QuestionType {
             if(!keywords.contains(word.getSecondaryPos())) {
                 builder.append(word.getWord() + " ");
             } else {
+                builder.append(QUESTION_WORD + " ");
                 answer.append(word.getWord() + " ");
             }
         }

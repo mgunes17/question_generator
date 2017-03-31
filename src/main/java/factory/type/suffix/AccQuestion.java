@@ -18,6 +18,7 @@ public class AccQuestion extends SuffixQuestion implements QuestionType {
     private final String KACI = "kaçı";
     private final String KACINI = "kaçını";
     private final String KACININ = "kaçının";
+    private final String NEYINI = "neyini";
 
 
     public List<Question> reorganize(List<Word> wordList) {
@@ -44,7 +45,9 @@ public class AccQuestion extends SuffixQuestion implements QuestionType {
             else
                 return KACI;
         }
+        else if(word.getLog().contains("P2sg") || word.getLog().contains("P3sg"))
+            return NEYINI;
         else
-            return NEREYI;
+            return NEYI;
     }
 }
