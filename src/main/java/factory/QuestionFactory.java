@@ -90,7 +90,7 @@ public class QuestionFactory {
     }
 
     private Suffix getSuffix(Word word) {
-        String log = word.getLog() + " " + word.getSecondaryPos();
+        String log = word.getLog() + " " + word.getSecondaryPos() + " " + word.getPrimaryPos();
 
         if(log.contains("Acc")) {
             questionTypeSet.add(singleTypes.get("acc"));

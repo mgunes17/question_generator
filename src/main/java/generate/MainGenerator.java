@@ -68,18 +68,26 @@ public class MainGenerator {
         sentenceList.add("Yarın sabah İstanbul' dan dönecek .");
         sentenceList.add("Elmaların 5te 2sini yedi .");
         sentenceList.add("Kitabı bitireli çok oldu .");
+        sentenceList.add("Öğrencilerin 5i okula gelmedi.");
         sentenceList.add("Elmaların 60ını suya düşürdü .");
         sentenceList.add("O elmaların 6da 2sinin yarısını yedi .");
+        sentenceList.add("Ali İstanbul'dan Ankara'ya gelen adamdır .");
+        sentenceList.add("Ali İstanbul'dan Ankara'ya yarın gelecek olan adamdır. .");
+        sentenceList.add("Adam hastanede yatıyor .");
+        sentenceList.add("Kitabı bitirince sana vereceğim .");
+        sentenceList.add("İstanbul'u fetheden kişi Fatih Sultan Mehmet'tir.");
 
-        List<Sentence> sentences = new ArrayList<Sentence>();
+
+        List<Sentence> savedSentences = new ArrayList<Sentence>();
 
         for(String sentence: sentenceList) {
             Sentence sentence1 = new Sentence(sentence);
             sentence1.setQuestionList(convertQuestions(sentence));
+            savedSentences.add(sentence1);
         }
 
         SaveType saveType = new FileSave();
-        return saveType.save(sentences);
+        return saveType.save(savedSentences);
     }
 
     private List<Question> convertQuestions(String sentence) {
